@@ -22,11 +22,12 @@ jobs:
           healthcheck: "https://my-some-random-deploy-app.herokuapp.com/version"
           rollbackonhealthcheckfailed: true
   tag_release:
-    needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
+    needs: [simple_deployment_pipeline]
     if: ${{ github.event_name == 'push' }}
     steps:
-      - uses: anothrNick/github-tag-action@1.36.0
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
